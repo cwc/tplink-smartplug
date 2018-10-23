@@ -72,6 +72,7 @@ def decrypt(string):
 # Parse commandline arguments
 parser = argparse.ArgumentParser(description="TP-Link Wi-Fi Smart Plug Client v" + str(version))
 parser.add_argument("-t", "--target", metavar="<hostname>", required=True, help="Target hostname or IP address", type=validHostname)
+parser.add_argument("-p", "--port", metavar="<port>", help="Target port (plugs by default use 9999)", default=9999, type=int)
 group = parser.add_mutually_exclusive_group(required=True)
 group.add_argument("-c", "--command", metavar="<command>", help="Preset command to send. Choices are: "+", ".join(commands), choices=commands)
 group.add_argument("-j", "--json", metavar="<JSON string>", help="Full JSON string of command to send")
@@ -80,7 +81,7 @@ args = parser.parse_args()
 
 # Set target IP, port and command to send
 ip = args.target
-port = 9999
+port = args.port
 if args.command is None:
 	cmd = args.json
 else:
